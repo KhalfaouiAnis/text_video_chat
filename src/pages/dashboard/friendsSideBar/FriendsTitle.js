@@ -9,6 +9,9 @@ const FriendsTitle = ({ title, color = "#8e9297" }) => {
         color: color,
         fontSize: "14px",
         marginTop: "10px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       {title}

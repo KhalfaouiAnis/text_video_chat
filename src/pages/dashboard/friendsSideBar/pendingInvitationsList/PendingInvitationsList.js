@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import PendingInvitationsListItem from "./PendingInvitationsListItem";
 import FriendsTitle from "../FriendsTitle";
@@ -13,7 +13,9 @@ const MainContainer = styled("div")({
   overflow: "auto",
 });
 
-const PendingInvitationsList = ({ pendingFriendsInvitations }) => {
+const PendingInvitationsList = () => {
+  const { pendingFriendsInvitations } = useSelector(({ friends }) => friends);
+
   return (
     <MainContainer>
       {pendingFriendsInvitations.length < 1 ? (
@@ -32,10 +34,4 @@ const PendingInvitationsList = ({ pendingFriendsInvitations }) => {
   );
 };
 
-const mapStateToProps = ({ friends }) => {
-  return {
-    ...friends,
-  };
-};
-
-export default connect(mapStateToProps)(PendingInvitationsList);
+export default PendingInvitationsList;

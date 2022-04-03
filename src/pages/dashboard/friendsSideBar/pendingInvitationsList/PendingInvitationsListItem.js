@@ -1,25 +1,25 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import Avatar from "../../../../shared/components/Avatar";
 import InvitationDecisionButtons from "./InvitationDecisionButtons";
 import TextFormatter from "../../../../shared/components/TextFormatter";
-
-const PendingInvitationsListItem = ({
-  id,
-  username,
-  mail,
+import {
   acceptFriendInvitation,
   rejectFriendInvitation,
-}) => {
+} from "../../../../store/actions/friendsActions";
+
+const PendingInvitationsListItem = ({ id, username, mail }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const dispatch = useDispatch();
 
   const handleAcceptInvitation = () => {
-    acceptFriendInvitation({ id });
+    dispatch(acceptFriendInvitation({ id }));
     setButtonsDisabled(true);
   };
 
   const handleRejectInvitation = () => {
-    rejectFriendInvitation({ id });
+    dispatch(rejectFriendInvitation({ id }));
     setButtonsDisabled(true);
   };
 

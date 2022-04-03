@@ -1,13 +1,26 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
-import Avatar from "../../../../shared/components/Avatar";
 import { Typography } from "@mui/material";
+import Avatar from "../../../../shared/components/Avatar";
 import OnlineIndicator from "./OnlineIndicator";
 import TextFormatter from "../../../../shared/components/TextFormatter";
 
+import {
+  chatTypes,
+  setChosenChatDetails,
+} from "../../../../store/actions/chatActions";
+
 const FriendsListItem = ({ id, username, isOnline }) => {
+  const dispatch = useDispatch();
+
+  const handleChooseActiveConversation = () => {
+    dispatch(setChosenChatDetails({ id, name: username }, chatTypes.DIRECT));
+  };
+
   return (
     <Button
+      onClick={handleChooseActiveConversation}
       style={{
         width: "100%",
         height: "42px",
