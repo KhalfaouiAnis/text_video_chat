@@ -5,6 +5,8 @@ import {
   setOnlineUsers,
 } from "../store/actions/friendsActions";
 import { updateDirectChatHistoryIfActive } from "../shared/utils/chat";
+import { newRoomCreated } from "./roomHandler";
+import * as roomHandler from "./roomHandler";
 import store from "../store/store";
 
 let socket;
@@ -37,6 +39,14 @@ export const connectWithSocktServer = (userDetails) => {
   socket.on("direct-chat-history", (data) => {
     updateDirectChatHistoryIfActive(data);
   });
+
+  socket.on("room-create", (data) => {
+    newRoomCreated(data);
+  });
+
+  socket.on("active-rooms", (data) => {
+    roomHandler.updateActiveRooms(data);
+  });
 };
 
 export const sendDirectMessage = (data) => {
@@ -45,4 +55,8 @@ export const sendDirectMessage = (data) => {
 
 export const getDirectChatHistory = (data) => {
   socket.emit("direct-chat-history", data);
+};
+
+export const createNewRoom = () => {
+  socket.emit("room-create");
 };

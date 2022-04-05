@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import AppBar from "./appBar/AppBar";
 import SideBar from "./sideBar/SideBar";
@@ -8,6 +8,7 @@ import Messenger from "./messenger/Messenger";
 import { logout } from "../../shared/utils/auth";
 import { setUserDetails } from "../../store/actions/authActions";
 import { connectWithSocktServer } from "../../RTC/socketConnection";
+import Room from "./room/Room";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -16,7 +17,9 @@ const Wrapper = styled("div")({
 });
 
 const Dashboard = () => {
+  const isUserInRoom = useSelector(({ room }) => room.isUserInRoom);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
     if (!userDetails) {
@@ -33,6 +36,7 @@ const Dashboard = () => {
       <FriendsSideBar />
       <Messenger />
       <AppBar />
+      {isUserInRoom && <Room />}
     </Wrapper>
   );
 };

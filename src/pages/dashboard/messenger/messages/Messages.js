@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import MessagesHeader from "./MessagesHeader";
@@ -26,8 +26,14 @@ const convertDateToHumanReadable = (date, format) => {
 
 const Messages = () => {
   const { chosenChatDetails, messages } = useSelector(({ chat }) => chat);
+  const containerRef = useRef();
+
+  useEffect(() => {
+    containerRef.current.scrollTo(0, containerRef.current.scrollHeight);
+  }, [messages]);
+
   return (
-    <MainContainer>
+    <MainContainer ref={containerRef}>
       <MessagesHeader name={chosenChatDetails?.name} />
       {messages.map((message, index) => {
         const sameAuthor =
