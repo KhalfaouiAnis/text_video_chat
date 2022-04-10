@@ -1,5 +1,16 @@
 :root {
-  --placeholder-color: "gray";
+  --placeholder-color: gray;
+  --light-gray-color: #f0f0f0;
+  --darken-gray-color: #e0e0e0;
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --darken-black-color: #1d1a1a;
+  --lighten-black-color: #363535;
+  --light-blue-color: #0a73ab;
+  --darken-blue-color: #005f91;
+  --dark-blue-color: #002b42;
+  --sender-msg-bgcolor: #f6f9fa;
+  --receiver-msg-bgcolor: #c0b8dd;
 }
 
 body {
@@ -15,6 +26,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
+  box-shadow: 0 1.4px 0 0 rgb(141 109 182);
 }
 
 code {

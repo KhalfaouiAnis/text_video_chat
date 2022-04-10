@@ -1,21 +1,44 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/system";
 
-const FriendsTitle = ({ title, color = "#8e9297" }) => {
+const FriendsTitleContainer = styled("div")({
+  width: "100%",
+  marginTop: "5px",
+  padding: "8px 0",
+});
+
+const FriendsTitle = ({
+  title,
+  color = "white",
+  bgColor = "var(--lighten-black-color)",
+  withBorder,
+}) => {
   return (
-    <Typography
-      sx={{
-        textTransform: "uppercase",
-        color: color,
-        fontSize: "14px",
-        marginTop: "10px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+    <FriendsTitleContainer
+      style={
+        withBorder
+          ? {
+              borderTopLeftRadius: "12px",
+              borderBottomRightRadius: "12px",
+              backgroundColor: bgColor,
+            }
+          : { backgroundColor: bgColor }
+      }
     >
-      {title}
-    </Typography>
+      <Typography
+        sx={{
+          textTransform: "uppercase",
+          color: color,
+          fontSize: "14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {title}
+      </Typography>
+    </FriendsTitleContainer>
   );
 };
 

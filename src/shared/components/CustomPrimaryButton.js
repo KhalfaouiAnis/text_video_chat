@@ -6,6 +6,7 @@ const CustomPrimaryButton = ({
   additionalStyles,
   disabled,
   onClick,
+  Icon,
 }) => {
   return (
     <Button
@@ -17,12 +18,14 @@ const CustomPrimaryButton = ({
         fontWeight: 500,
         width: "100%",
         height: "40px",
+        display: "flex",
+        justifyContent: "space-evenly",
       }}
       style={additionalStyles ? additionalStyles : {}}
       disabled={disabled}
       onClick={onClick}
     >
-      {label}
+      {label} {Icon && <Icon />}
     </Button>
   );
 };

@@ -42,6 +42,17 @@ export const register = async (data) => {
   }
 };
 
+export const search = async (mail) => {
+  try {
+    return await apiClient.post("/auth/search", mail);
+  } catch (exception) {
+    return {
+      error: true,
+      exception,
+    };
+  }
+};
+
 // Private routes
 export const sendFriendInvitation = async (data) => {
   try {

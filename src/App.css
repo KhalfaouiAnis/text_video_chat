@@ -1,11 +1,37 @@
 ::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
   color: var(--placeholder-color);
 }
 ::-moz-placeholder {
-  /* Firefox 19+ */
   color: var(--placeholder-color);
 }
 ::placeholder {
   color: var(--placeholder-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--darken-blue-color);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar:hover {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  background-color: rgba(179, 179, 179, 0.6);
+}
+
+.m-left {
+  margin-left: 10px;
+}
+
+.bold {
+  font-weight: bold;
 }

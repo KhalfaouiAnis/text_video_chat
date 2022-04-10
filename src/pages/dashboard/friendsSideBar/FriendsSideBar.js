@@ -11,16 +11,16 @@ const MainContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  backgroundColor: "#2F3136",
+  backgroundColor: "var(--light-gray-color)",
 });
 
 const FriendsSideBar = () => {
   return (
     <MainContainer>
       <AddFriendButton />
-      <FriendsTitle title="Private Messages" />
+      <FriendsTitle title="Discussions" withBorder />
       <FriendsList />
-      <FriendsTitle title="Invitations" />
+      <FriendsTitle title="Invitations" withBorder />
       <PendingInvitationsList />
     </MainContainer>
   );

@@ -5,30 +5,32 @@ import { styled } from "@mui/system";
 import { sendDirectMessage } from "../../../RTC/socketConnection";
 
 const MainContainer = styled("div")({
-  width: "100%",
+  width: "90%",
   height: "60px",
   dispaly: "flex",
   alignItems: "center",
   justifyContent: "center",
+  borderRadius: "4px",
+  border: "1px solid gray",
 });
 
 const Input = styled("input")({
   backgroundColor: "white",
-  width: "97.3%",
-  height: "44px",
-  border: "none",
+  width: "89%",
+  height: "25px",
+  border: "1px solid gray",
+  borderRadius: "4px",
+  marginTop: "13px",
+  marginBottom: "10px",
+  marginLeft: "38px",
   color: "black",
-  borderRadius: "22px",
   fontSize: "14px",
-  padding: "0 10px",
-  margin: "0 2px",
-  boxShadow:
-    "0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06),0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)",
+  padding: "10px 10px",
 });
 
 const NewMessageInput = () => {
   const { chosenChatDetails } = useSelector(({ chat }) => chat);
-  const initialState = `write message to ${chosenChatDetails.name}`;
+  const initialState = `Type a new message to ${chosenChatDetails.name}`;
   const [message, setMessage] = useState("");
   const [color, setColor] = useState("");
   const [placeholder, setPlaceholder] = useState(initialState);
@@ -64,15 +66,14 @@ const NewMessageInput = () => {
   };
 
   return (
-    <MainContainer>
-      <Input
-        style={{ "--placeholder-color": color || "gray" }}
-        placeholder={placeholder}
-        value={message}
-        onChange={handleMessageValueChange}
-        onKeyDown={handleKeyPressed}
-      />
-    </MainContainer>
+    <Input
+      className="new-message-input"
+      style={{ "--placeholder-color": color || "gray" }}
+      placeholder={placeholder}
+      value={message}
+      onChange={handleMessageValueChange}
+      onKeyDown={handleKeyPressed}
+    />
   );
 };
 

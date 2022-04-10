@@ -1,16 +1,35 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/system";
-import MessagesHeader from "./MessagesHeader";
+import moment from "moment";
+
 import Message from "./Message";
+import NewConversation from "./NewConversation";
 import DateSeperator from "./DateSeperator";
 
 const MainContainer = styled("div")({
-  height: "calc(100% - 60px)",
+  height: "calc(97% - 60px)",
   overflow: "auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+});
+
+const MessagesContainer = styled("div")({
+  width: "97.3%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+});
+
+const MessageContainer = styled("div")({
+  display: "flex",
+});
+
+const WithDateSeparatorContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 });
 
 const convertDateToHumanReadable = (date, format) => {
@@ -25,7 +44,12 @@ const convertDateToHumanReadable = (date, format) => {
 };
 
 const Messages = () => {
-  const { chosenChatDetails, messages } = useSelector(({ chat }) => chat);
+  const {
+    messages,
+    chosenChatDetails: { name },
+  } = useSelector(({ chat }) => chat);
+  const { _id } = useSelector(({ auth }) => auth.userDetails);
+
   const containerRef = useRef();
 
   useEffect(() => {
@@ -34,41 +58,66 @@ const Messages = () => {
 
   return (
     <MainContainer ref={containerRef}>
-      <MessagesHeader name={chosenChatDetails?.name} />
-      {messages.map((message, index) => {
-        const sameAuthor =
-          index > 0 &&
-          messages[index].author._id === messages[index - 1].author._id;
-        const sameDay =
-          index > 0 &&
-          convertDateToHumanReadable(new Date(message.date), "dd/mm/yy") ===
-            convertDateToHumanReadable(
-              new Date(messages[index - 1].date),
-              "dd/mm/yy"
-            );
+      <MessagesContainer>
+        {messages.length <= 0 && <NewConversation username={name} />}
+        {messages.length >= 0 &&
+          messages.map((message, index) => {
+            const momentDate = moment(message.date.toString());
+            const sameAuthor =
+              index > 0 &&
+              messages[index].author._id === messages[index - 1].author._id;
 
-        return (
-          <div key={message._id} style={{ width: "97.3%" }}>
-            {(!sameDay || index === 0) && (
-              <DateSeperator
-                date={convertDateToHumanReadable(
-                  new Date(message.date),
+            const sameDay =
+              index > 0 &&
+              convertDateToHumanReadable(new Date(message.date), "dd/mm/yy") ===
+                convertDateToHumanReadable(
+                  new Date(messages[index - 1].date),
                   "dd/mm/yy"
-                )}
-              />
-            )}
-            <Message
-              {...message}
-              date={convertDateToHumanReadable(
-                new Date(message.date),
-                "dd/mm/yy"
-              )}
-              sameAuthor={sameAuthor}
-              sameDay={sameDay}
-            />
-          </div>
-        );
-      })}
+                );
+
+            const direction = _id === message.author._id ? "end" : "start";
+            const sameSender = _id === message.author._id;
+
+            if (!sameDay || index === 0) {
+              return (
+                <WithDateSeparatorContainer
+                  key={message._id}
+                  style={{ justifyContent: direction }}
+                >
+                  <DateSeperator date={momentDate.format("MMM Do, YYYY LT")} />
+                  <MessageContainer style={{ justifyContent: direction }}>
+                    <Message
+                      {...message}
+                      sameSender={sameSender}
+                      date={momentDate}
+                      sameAuthor={sameAuthor}
+                      sameDay={sameDay}
+                      index={index}
+                      length={messages.length}
+                    />
+                  </MessageContainer>
+                </WithDateSeparatorContainer>
+              );
+            }
+
+            return (
+              <MessageContainer
+                style={{ justifyContent: direction }}
+                key={message._id}
+              >
+                <Message
+                  {...message}
+                  sameSender={sameSender}
+                  date={momentDate}
+                  sameAuthor={sameAuthor}
+                  sameDay={sameDay}
+                  index={index}
+                  length={messages.length}
+                />
+              </MessageContainer>
+            );
+          })}
+      </MessagesContainer>
     </MainContainer>
   );
 };

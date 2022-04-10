@@ -1,13 +1,12 @@
 import React, { useState } from "react";
+import InviteIcon from "@mui/icons-material/AddCircleRounded";
 import CustomPrimaryButton from "../../../shared/components/CustomPrimaryButton";
 import AddFriendDialog from "./AddFriendDialog";
 
 const customStyles = {
-  marginTop: "10px",
-  marginLeft: "5px",
-  width: "80%",
-  height: "30px",
-  background: "#3ba55d",
+  marginTop: "5px",
+  width: "98%",
+  height: "38px",
 };
 
 const AddFriendButton = () => {
@@ -25,7 +24,8 @@ const AddFriendButton = () => {
     <>
       <CustomPrimaryButton
         additionalStyles={customStyles}
-        label="Add Friend"
+        label="Invite Colleague"
+        Icon={InviteIcon}
         onClick={handleOpenAddFriendDialog}
       />
       <AddFriendDialog

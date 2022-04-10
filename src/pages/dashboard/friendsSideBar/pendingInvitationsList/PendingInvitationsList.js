@@ -19,7 +19,11 @@ const PendingInvitationsList = () => {
   return (
     <MainContainer>
       {pendingFriendsInvitations.length < 1 ? (
-        <FriendsTitle title="No pending invitations" color="white" />
+        <FriendsTitle
+          title="No pending invitations"
+          color="black"
+          bgColor="var(--light-gray-color)"
+        />
       ) : (
         pendingFriendsInvitations.map((inv) => (
           <PendingInvitationsListItem

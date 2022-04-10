@@ -23,7 +23,11 @@ const FriendsList = () => {
   return (
     <MainContainer>
       {friends.length < 1 ? (
-        <FriendsTitle title="No Friends Yet!" color="white" />
+        <FriendsTitle
+          title="No Colleagues Yet"
+          color="black"
+          bgColor="var(--light-gray-color)"
+        />
       ) : (
         checkOnlineUsers(friends, onlineUsers).map((f) => (
           <FriendsListItem
