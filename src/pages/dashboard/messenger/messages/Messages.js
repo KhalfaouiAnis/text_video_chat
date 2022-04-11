@@ -6,6 +6,7 @@ import moment from "moment";
 import Message from "./Message";
 import NewConversation from "./NewConversation";
 import DateSeperator from "./DateSeperator";
+import { formatDate, formats } from "../../../../shared/utils/dateUtils";
 
 const MainContainer = styled("div")({
   height: "calc(97% - 60px)",
@@ -31,17 +32,6 @@ const WithDateSeparatorContainer = styled("div")({
   flexDirection: "column",
   justifyContent: "space-between",
 });
-
-const convertDateToHumanReadable = (date, format) => {
-  const map = {
-    mm: date.getMonth() + 1,
-    dd: date.getDate(),
-    yy: date.getFullYear().toString().slice(-2),
-    yyyy: date.getFullYear(),
-  };
-
-  return format.replace(/mm|dd|yy|yyy/gi, (matched) => map[matched]);
-};
 
 const Messages = () => {
   const {
@@ -69,11 +59,7 @@ const Messages = () => {
 
             const sameDay =
               index > 0 &&
-              convertDateToHumanReadable(new Date(message.date), "dd/mm/yy") ===
-                convertDateToHumanReadable(
-                  new Date(messages[index - 1].date),
-                  "dd/mm/yy"
-                );
+              formatDate(message.date) === formatDate(messages[index - 1].date);
 
             const direction = _id === message.author._id ? "end" : "start";
             const sameSender = _id === message.author._id;
@@ -84,7 +70,7 @@ const Messages = () => {
                   key={message._id}
                   style={{ justifyContent: direction }}
                 >
-                  <DateSeperator date={momentDate.format("MMM Do, YYYY LT")} />
+                  <DateSeperator date={momentDate.format(formats.DIVIDER)} />
                   <MessageContainer style={{ justifyContent: direction }}>
                     <Message
                       {...message}

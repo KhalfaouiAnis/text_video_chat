@@ -1,5 +1,5 @@
 :root {
-  --placeholder-color: gray;
+  /* ############# COLORs ############# */
   --light-gray-color: #f0f0f0;
   --darken-gray-color: #e0e0e0;
   --white-color: #ffffff;
@@ -9,8 +9,12 @@
   --light-blue-color: #0a73ab;
   --darken-blue-color: #005f91;
   --dark-blue-color: #002b42;
+
+  /* ############# ITEMS COLORs ############# */
+  --placeholder-color: gray;
   --sender-msg-bgcolor: #f6f9fa;
-  --receiver-msg-bgcolor: #c0b8dd;
+  --receiver-msg-bgcolor: #dbd7f1;
+  --msgBorderRadius: 5px;
 }
 
 body {

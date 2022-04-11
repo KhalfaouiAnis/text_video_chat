@@ -2,7 +2,7 @@ import React from "react";
 import CustomPrimaryButton from "../../../shared/components/CustomPrimaryButton";
 import RedirectInfo from "../../../shared/components/RedirectInfo";
 import { useHistory } from "react-router-dom";
-import { Tooltip } from "@mui/material";
+import { Chip, Divider, Tooltip } from "@mui/material";
 
 const getFormNotValidMessage = () => {
   return "Please enter correct username/email/password";
@@ -33,10 +33,17 @@ const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
           />
         </div>
       </Tooltip>
+      <Divider
+        sx={{ maxHeight: "1px", backgroundColor: "white", marginTop: "10px" }}
+        variant="middle"
+      />
       <RedirectInfo
         text="Already a member? "
         redirectText="Login here"
-        additionalStyles={{ marginTop: "5px" }}
+        additionalStyles={{
+          marginTop: "10px",
+          textAlign: "center",
+        }}
         redirectHandler={handlePushToLoginPage}
       />
     </React.Fragment>

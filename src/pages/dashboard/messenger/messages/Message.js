@@ -1,14 +1,14 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Typography } from "@mui/material";
-import moment from "moment";
+import { Tooltip, Typography } from "@mui/material";
+import { formats } from "../../../../shared/utils/dateUtils";
 
 const MainContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   marginTop: "10px",
   padding: "5px",
-  borderRadius: "10px",
+  borderRadius: "var(--msgBorderRadius)",
   color: "var(--black-color)",
   maxWidth: "700px",
 });
@@ -19,19 +19,19 @@ const MessageContainer = styled("div")({
 });
 const MessageContent = styled("div")({
   wordBreak: "break-word",
-  borderRadius: "10px",
+  borderRadius: "var(--msgBorderRadius)",
   padding: "2px 4px",
 });
 const SameAuthorMessageContent = styled("div")({
   marginTop: "4px",
   padding: "5px",
-  borderRadius: "10px",
+  borderRadius: "var(--msgBorderRadius)",
   color: "var(--black-color)",
   maxWidth: "700px",
 });
 const SameAuthorMessageText = styled("span")({
   wordBreak: "break-word",
-  borderRadius: "10px",
+  borderRadius: "var(--msgBorderRadius)",
   padding: "2px 4px",
 });
 const MessageHeader = styled("div")({
@@ -39,6 +39,10 @@ const MessageHeader = styled("div")({
   display: "flex",
   alignItems: "center",
 });
+
+const dateWrapper = ({ children, title }) => {
+  return <Tooltip title={title}>{children}</Tooltip>;
+};
 
 const Message = ({
   content,
@@ -76,9 +80,11 @@ const Message = ({
         }}
       >
         <MessageHeader>
-          <span style={{ fontSize: "12px", color: "#72767d" }}>
-            {date.format("MMM Do, YYYY LT")}
-          </span>
+          <dateWrapper title={date.format(formats.MESSAGE_TOOLTIP)}>
+            <span style={{ fontSize: "12px", color: "#72767d" }}>
+              {date.format(formats.MESSAGE)}
+            </span>
+          </dateWrapper>
         </MessageHeader>
         <MessageContainer>
           <MessageContent>{content}</MessageContent>
@@ -97,12 +103,14 @@ const Message = ({
         <MessageHeader>
           <span className="bold">{author.username}</span>
           {/* <DateTimeContainer className="m-left"> */}
-          <span
-            className="m-left"
-            style={{ fontSize: "12px", color: "#72767d" }}
-          >
-            {date.format("MMM Do, YYYY LT")}
-          </span>
+          <dateWrapper title={date.format(formats.MESSAGE_TOOLTIP)}>
+            <span
+              className="m-left"
+              style={{ fontSize: "12px", color: "#72767d" }}
+            >
+              {date.format(formats.MESSAGE)}
+            </span>
+          </dateWrapper>
           {/* </DateTimeContainer> */}
         </MessageHeader>
         <MessageContainer>
