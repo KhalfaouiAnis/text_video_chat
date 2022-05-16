@@ -16,15 +16,6 @@ const MessengerContent = ({ chosenChatDetails }) => {
     });
   }, [chosenChatDetails]);
 
-  // const onScroll = () => {
-  //   if (msgRef.current) {
-  //     const { scrollTop, scrollHeight, clientHeight } = msgRef.current;
-  //     if (scrollTop + clientHeight === scrollHeight) {
-  //       alert("reached bottom");
-  //     }
-  //   }
-  // };
-
   return (
     <Wrapper>
       <Messages />

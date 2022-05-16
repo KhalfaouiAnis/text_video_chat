@@ -18,6 +18,7 @@ const DateLabel = styled("span")({
   top: "-10px",
   color: "var(--darken-gray-color)",
   padding: "0 5px",
+  paddingBottom: "2px",
   fontSize: "14px",
 });
 

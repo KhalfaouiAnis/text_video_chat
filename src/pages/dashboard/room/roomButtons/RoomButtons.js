@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/system";
 import ScreenShareButton from "./ScreenShareButton";
 import MicButton from "./MicButton";
@@ -16,12 +17,24 @@ const MainWrapper = styled("div")({
 });
 
 const RoomButtons = () => {
+  const {
+    localStream,
+    screenSharingStream,
+    isScreenSharingActive,
+    isUserJoinedWithOnlyAudio,
+  } = useSelector((s) => s.room);
   return (
     <MainWrapper>
-      <ScreenShareButton />
-      <MicButton />
+      {!isUserJoinedWithOnlyAudio && (
+        <ScreenShareButton
+          localStream={localStream}
+          screenSharingStream={screenSharingStream}
+          isScreenSharingActive={isScreenSharingActive}
+        />
+      )}
+      <MicButton localStream={localStream} />
       <CloseRoomButton />
-      <CameraButton />
+      {!isUserJoinedWithOnlyAudio && <CameraButton localStream={localStream} />}
     </MainWrapper>
   );
 };

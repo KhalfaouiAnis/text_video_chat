@@ -9,7 +9,7 @@ const Wrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-evenly",
+  justifyContent: "space-arround",
 });
 
 const ImageWrapper = styled("img")({

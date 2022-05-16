@@ -35,6 +35,7 @@ const WithDateSeparatorContainer = styled("div")({
 
 const Messages = () => {
   const {
+    loading,
     messages,
     chosenChatDetails: { name },
   } = useSelector(({ chat }) => chat);
@@ -48,62 +49,67 @@ const Messages = () => {
 
   return (
     <MainContainer ref={containerRef}>
-      <MessagesContainer>
-        {messages.length <= 0 && <NewConversation username={name} />}
-        {messages.length >= 0 &&
-          messages.map((message, index) => {
-            const momentDate = moment(message.date.toString());
-            const sameAuthor =
-              index > 0 &&
-              messages[index].author._id === messages[index - 1].author._id;
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <MessagesContainer>
+          {messages.length <= 0 && <NewConversation username={name} />}
+          {messages.length >= 0 &&
+            messages.map((message, index) => {
+              const momentDate = moment(message.date.toString());
+              const sameAuthor =
+                index > 0 &&
+                messages[index].author._id === messages[index - 1].author._id;
 
-            const sameDay =
-              index > 0 &&
-              formatDate(message.date) === formatDate(messages[index - 1].date);
+              const sameDay =
+                index > 0 &&
+                formatDate(message.date) ===
+                  formatDate(messages[index - 1].date);
 
-            const direction = _id === message.author._id ? "end" : "start";
-            const sameSender = _id === message.author._id;
+              const direction = _id === message.author._id ? "end" : "start";
+              const sameSender = _id === message.author._id;
 
-            if (!sameDay || index === 0) {
+              if (!sameDay || index === 0) {
+                return (
+                  <WithDateSeparatorContainer
+                    key={message._id}
+                    style={{ justifyContent: direction }}
+                  >
+                    <DateSeperator date={momentDate.format(formats.DIVIDER)} />
+                    <MessageContainer style={{ justifyContent: direction }}>
+                      <Message
+                        {...message}
+                        sameSender={sameSender}
+                        date={momentDate}
+                        sameAuthor={sameAuthor}
+                        sameDay={sameDay}
+                        index={index}
+                        length={messages.length}
+                      />
+                    </MessageContainer>
+                  </WithDateSeparatorContainer>
+                );
+              }
+
               return (
-                <WithDateSeparatorContainer
-                  key={message._id}
+                <MessageContainer
                   style={{ justifyContent: direction }}
+                  key={message._id}
                 >
-                  <DateSeperator date={momentDate.format(formats.DIVIDER)} />
-                  <MessageContainer style={{ justifyContent: direction }}>
-                    <Message
-                      {...message}
-                      sameSender={sameSender}
-                      date={momentDate}
-                      sameAuthor={sameAuthor}
-                      sameDay={sameDay}
-                      index={index}
-                      length={messages.length}
-                    />
-                  </MessageContainer>
-                </WithDateSeparatorContainer>
+                  <Message
+                    {...message}
+                    sameSender={sameSender}
+                    date={momentDate}
+                    sameAuthor={sameAuthor}
+                    sameDay={sameDay}
+                    index={index}
+                    length={messages.length}
+                  />
+                </MessageContainer>
               );
-            }
-
-            return (
-              <MessageContainer
-                style={{ justifyContent: direction }}
-                key={message._id}
-              >
-                <Message
-                  {...message}
-                  sameSender={sameSender}
-                  date={momentDate}
-                  sameAuthor={sameAuthor}
-                  sameDay={sameDay}
-                  index={index}
-                  length={messages.length}
-                />
-              </MessageContainer>
-            );
-          })}
-      </MessagesContainer>
+            })}
+        </MessagesContainer>
+      )}
     </MainContainer>
   );
 };

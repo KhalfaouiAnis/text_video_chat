@@ -1,6 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../utils/auth";
+import { setAudioOnly } from "../../store/actions/roomActions";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -10,19 +11,25 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
+import AudioIcon from "@mui/icons-material/Audiotrack";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function AccountMenu() {
   const user = useSelector(({ auth }) => auth.userDetails);
+  const { audioOnly } = useSelector(({ room }) => room);
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleAudioOnlyChange = () => dispatch(setAudioOnly(!audioOnly));
 
   return (
     <React.Fragment>
@@ -95,6 +102,12 @@ export default function AccountMenu() {
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
           Logout
+        </MenuItem>
+        <MenuItem onClick={handleAudioOnlyChange}>
+          <ListItemIcon>
+            <AudioIcon fontSize="small" />
+          </ListItemIcon>
+          {audioOnly ? "Audio Only Enabled" : "Audio Only Disabled"}
         </MenuItem>
       </Menu>
     </React.Fragment>
